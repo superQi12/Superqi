@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperQi - تسجيل الدخول</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,12 +124,11 @@
                 </div>
                 <div id="face-outline-circle" class="face-outline-circle"></div>
                 <div class="bottom-guide-text">
-                    <p class="main-guide">جاري إلتقاط صورة الوجه</p>
-                    <p class="sub-guide">يرجى وضع وجهك داخل إطار الشاشة</p>
+                    <p class="main-guide">اضغط على الزر الدائري لالتقاط الصورة</p>
                 </div>
             </div>
-            <div id="loading-message" class="loading-message">
-                <p>جاري تحميل نماذج الذكاء الاصطناعي...</p>
+            <div class="camera-footer">
+                <button id="capture-btn" class="capture-button"></button>
             </div>
         </div>
     </div>
