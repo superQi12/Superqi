@@ -36,12 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- تحميل نماذج الذكاء الاصطناعي ---
     async function loadModels() {
-        const MODEL_URL = 'https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights';
+        // === تم تغيير مصدر تحميل النماذج إلى مصدر أكثر استقرارًا ===
+        const MODEL_URL = 'https://unpkg.com/face-api.js@0.22.2/weights';
         loadingMessage.classList.add('show');
         try {
             console.log("Starting to load models...");
-            await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-            console.log("Face detector model loaded.");
+            // === تم جعل عملية التحميل أكثر قوة لضمان عملها ===
+            await Promise.all([
+                faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+                faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+                faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
+            ]);
+            console.log("All models loaded.");
         } catch (error) {
             console.error("Error loading models:", error);
             alert("فشل تحميل نماذج الذكاء الاصطناعي. يرجى تحديث الصفحة والتأكد من اتصالك بالإنترنت.");
