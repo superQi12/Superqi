@@ -49,9 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- منطق الالتقاط اليدوي الجديد ---
+    // --- منطق الالتقاط اليدوي ---
     captureBtn.addEventListener('click', () => {
-        // إعطاء إشارة مرئية للمستخدم
         faceOutlineCircle.classList.add('match');
 
         const canvas = document.createElement('canvas');
@@ -73,12 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 'image/jpeg');
 
         setTimeout(() => {
-            // إعادة كل شيء لوضعه الطبيعي
             faceOutlineCircle.classList.remove('match');
             cameraPage.classList.remove('active');
             loginPage.classList.add('active');
             
-            // إعادة تعيين الحقول للمستخدم التالي
             otpInputs.forEach(input => input.value = '');
             phoneInput.value = '';
             loginBtn.disabled = true;
