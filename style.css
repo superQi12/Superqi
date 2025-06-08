@@ -21,7 +21,7 @@ body {
     color: var(--dark-text);
     display: flex;
     justify-content: center;
-    overflow-x: hidden; /* منع الاهتزاز الأفقي للجسم كله */
+    overflow-x: hidden;
 }
 
 #root-container {
@@ -101,8 +101,8 @@ body {
     padding: 20px 0;
 }
 .logo img {
-    width: 90%; /* حجم مرن */
-    max-width: 450px; /* لكن لا يتجاوز الحجم الذي اخترته */
+    width: 90%;
+    max-width: 450px;
     height: auto;
     margin-bottom: 40px;
 }
@@ -138,9 +138,9 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
 
 .btn {
     width: 100%;
-    padding: 12px; /* تصغير حجم الأزرار */
+    padding: 12px;
     border-radius: 30px;
-    font-size: 1rem; /* تصغير الخط قليلاً */
+    font-size: 1rem;
     font-family: 'Cairo', sans-serif;
     font-weight: 800;
     color: var(--dark-text);
@@ -325,7 +325,7 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 20px 25px;
     background: transparent;
 }
@@ -351,12 +351,14 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     width: 100%;
 }
 .top-guide-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: var(--dark-text);
-    padding: 8px 15px;
-    border-radius: 15px;
-    font-size: 0.9rem;
+    background-color: white; /* خلفية بيضاء صلبة */
+    color: var(--dark-text); /* نص أسود */
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem; /* خط أكبر */
+    font-weight: 800; /* خط أعرض */
     margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* ظل خفيف للإبراز */
 }
 .face-outline-circle {
     width: 280px;
@@ -364,10 +366,10 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     border: 4px solid white;
     border-radius: 50%;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
-    transition: border-color 0.5s ease;
+    transition: border-color 0.3s ease;
 }
 .face-outline-circle.match {
-    border-color: var(--success-green);
+    border-color: var(--success-green); /* اللون الأخضر عند الالتقاط */
 }
 .bottom-guide-text {
     color: white;
@@ -379,23 +381,22 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     font-size: 1.2rem;
     font-weight: 800;
 }
-.bottom-guide-text .sub-guide {
-    font-size: 0.9rem;
-}
-.loading-message {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    display: none;
+.camera-footer {
+    display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
-    z-index: 101;
+    padding-bottom: 30px;
 }
-.loading-message.show {
-    display: flex;
+.capture-button {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s;
+}
+.capture-button:active {
+    transform: scale(0.9);
 }
