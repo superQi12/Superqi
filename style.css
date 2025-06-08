@@ -193,7 +193,10 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     flex-shrink: 0;
 }
 
-/* --- OTP Page Styles --- */
+/* --- OTP Page Styles (MODIFIED) --- */
+#otp-page .container {
+    overflow: hidden; /* منع التمرير نهائيًا */
+}
 #otp-page .otp-header {
     display: flex;
     justify-content: space-between;
@@ -201,7 +204,7 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     font-weight: bold;
     flex-shrink: 0;
 }
-#otp-page .alert-banner, #selfie-page .alert-banner {
+#otp-page .alert-banner {
     background-color: #FFF9E6;
     color: #FFA500;
     padding: 12px;
@@ -211,6 +214,7 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     margin: 20px 0;
     font-size: 0.8rem;
     text-align: right;
+    flex-shrink: 0;
 }
 .alert-banner i { margin-left: 10px; font-size: 1.2em; }
 #otp-page .otp-main {
@@ -218,8 +222,8 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding-top: 20%;
+    justify-content: center; /* توسيط المحتوى عموديًا */
+    text-align: center;
 }
 .otp-main h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; }
 .otp-input-group { display: flex; justify-content: center; gap: 10px; direction: ltr; }
@@ -306,7 +310,7 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     margin-left: 20px;
 }
 
-/* --- Camera Page Styles --- */
+/* --- Camera Page Styles (MODIFIED) --- */
 #camera-page {
     background-color: #000;
     padding: 0;
@@ -351,14 +355,14 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     width: 100%;
 }
 .top-guide-box {
-    background-color: white; /* خلفية بيضاء صلبة */
-    color: var(--dark-text); /* نص أسود */
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 1rem; /* خط أكبر */
-    font-weight: 800; /* خط أعرض */
-    margin-bottom: 25px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* ظل خفيف للإبراز */
+    background-color: white;
+    color: var(--dark-text);
+    padding: 12px 25px; /* زيادة الحجم */
+    border-radius: 25px;
+    font-size: 1.1rem; /* خط أكبر */
+    font-weight: 800;
+    margin-bottom: 30px; /* زيادة المسافة */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35); /* ظل أقوى */
 }
 .face-outline-circle {
     width: 280px;
@@ -369,7 +373,7 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     transition: border-color 0.3s ease;
 }
 .face-outline-circle.match {
-    border-color: var(--success-green); /* اللون الأخضر عند الالتقاط */
+    border-color: var(--success-green);
 }
 .bottom-guide-text {
     color: white;
@@ -385,17 +389,31 @@ form label { display: block; text-align: right; margin-bottom: 8px; font-size: 0
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 30px;
+    padding-bottom: 20px; /* تقليل المسافة السفلية */
+}
+.capture-container {
+    text-align: center;
+}
+.capture-container span {
+    display: block;
+    color: white;
+    font-weight: 700;
+    margin-top: 10px;
 }
 .capture-button {
-    width: 70px;
-    height: 70px;
-    background-color: white;
+    width: 75px;
+    height: 75px;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     border: 5px solid rgba(255, 255, 255, 0.7);
     cursor: pointer;
     outline: none;
     transition: transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: var(--dark-text);
 }
 .capture-button:active {
     transform: scale(0.9);
